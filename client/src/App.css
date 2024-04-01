@@ -1,0 +1,89 @@
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: transparent;
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+    height: 10px;
+	background-color: rgb(15 23 42 / 1);;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: rgb(83, 102, 132);
+}
+
+html {
+    -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+thead td {
+    padding: 5rem;
+}
+td:nth-child(2n-1) {
+    background: rgba(35, 64, 144, 0.167);
+}
+table tr td {
+    padding: 0.3rem;
+}
+
+table tbody tr:hover {
+    background: rgb(54, 71, 98);
+}
+
+tbody tr td:last-child {
+    padding-right: 1rem;
+}
+tbody tr:nth-of-type(2n-1) {
+    background: rgba(0, 0, 0, 0.221);
+}
+
+.bg-gray-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.bg-blue-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.bg-red-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
+.bg-green-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+}
+
+.bg-slate-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
+.list-content:not(:last-child) {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.095);
+}
+
+.fill-red-500 {
+    fill: #ef4444;
+}
+
+.fill-gray-700 {
+    fill: #374151;
+}
+
+.dsf {
+    background-color: #991b1b;
+    background-color: #ffffff19;
+}
