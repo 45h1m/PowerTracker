@@ -13,7 +13,6 @@ async function initCurrentData() {
     try {
 
         const readStatus = await readDB('./db/'+ fileName + '.json');
-        console.log(readStatus);
 
         const data = await readDB('./db/'+ fileName+'.json');
 
