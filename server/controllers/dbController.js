@@ -3,6 +3,7 @@ const writeDB = require('./writeDB')
 const readDir = require('./readDir')
 const fs = require('fs')
 
+let currentDate = getISTDateTime().split(',')[0];
 let currentData = [];
 let timer = 100;
 
@@ -39,6 +40,12 @@ function addData(jsonData) {
 }
 
 async function saveCurrentData(fileName) {
+
+    if(currentDate !== fileName) {
+        currentData = [];
+        currentDate = fileName;
+        return console.log("New date");
+    }
 
     const writeStatus = await writeDB(currentData, './db/'+fileName+'.json');
     console.log(writeStatus);
