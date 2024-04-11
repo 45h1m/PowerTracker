@@ -82,7 +82,7 @@ const LoadingSVG = () => (
     </svg>
 );
 
-const host = window.location.host.split(":")[0];
+const host ="powertracker-production.up.railway.app"
 
 const SavedData = () => {
     let { log } = useContext(WebSocketContext);
@@ -94,7 +94,7 @@ const SavedData = () => {
     useEffect(() => {
         log(host);
 
-        fetch(`http://${host}/dates`)
+        fetch(`https://${host}/dates`)
             .then((res) => res.json())
             .then((data) => {
                 log(data);
@@ -115,7 +115,7 @@ const SavedData = () => {
 
         setGraphData("loading");
 
-        fetch(`http://${host}/dates/${value}`)
+        fetch(`https://${host}/dates/${value}`)
             .then((res) => res.json())
             .then((data) => {
                 log(data);

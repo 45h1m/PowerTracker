@@ -1,17 +1,11 @@
-
 #include <ESP8266WiFi.h>
 #include <WebSocketsClient.h>
 #include <ArduinoJson.h>
 
-
-// Wi-Fi Credentials
 const char* ssid = "SSID";
 const char* password = "password";
 
-// Server Details
-//String serverHost = "Your PC IP";
-//int serverPort = 8080;
-String serverHost = "192.168.131.186";
+String serverHost = "powertracker-production.up.railway.app";
 int serverPort = 80;
 
 // Data Sending Time
@@ -19,8 +13,8 @@ unsigned long CurrentMillis, PreviousMillis, DataSendingTime = (unsigned long) 2
 
 WebSocketsClient webSocket;
 
-int switch1 = 1;
-int switch2 = 2;
+int switch1 = 16;
+int switch2 = 5;
 
 bool clientConnect = false;
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
@@ -118,7 +112,7 @@ void setup() {
   setup_wifi();
 
   // server address, port, URL and protocol // URL and Protocol should not be change
-  webSocket.begin(serverHost, serverPort, "/", "45h1m");
+  webSocket.begin(serverHost, serverPort, "/");
 
   // event handler
   webSocket.onEvent(webSocketEvent);

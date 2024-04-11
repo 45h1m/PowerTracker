@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
-const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const WebSocket = require('ws');
 const cors = require('cors');
 const { addData, getISTDateTime, sendDates, sendData, currentData } = require('./controllers/dbController');
+
+const server = require('http').createServer(app);
 
 const wss = new WebSocket.Server({ server:server });
 
