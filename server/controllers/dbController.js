@@ -21,7 +21,7 @@ async function initCurrentData() {
     } catch (error) {
 
         console.log(error);
-        writeDB([], './db/'+fileName +'.json');
+        // writeDB([], './db/'+fileName +'.json');
     }
 }
 
