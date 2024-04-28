@@ -42,8 +42,8 @@ wss.on('connection', (ws) => {
         let data = JSON.parse(text);
         
         data.timestamp = getISTDateTime().split(',')[1];
-        data.inw = parseFloat(data.inv) * parseFloat(data.ina);
-        data.outw = parseFloat(data.outv) * parseFloat(data.outa);
+        data.inw = ((parseFloat(data.inv) * parseFloat(data.ina)) / 1000).toFixed(4);
+        data.outw = ((parseFloat(data.outv) * parseFloat(data.outa)) / 1000).toFixed(4);
         
         delete data.event;
         

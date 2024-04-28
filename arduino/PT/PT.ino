@@ -5,16 +5,26 @@
 const char* ssid = "SSID";
 const char* password = "password";
 
-String serverHost = "powertracker-production.up.railway.app";
+String serverHost = "192.168.69.186";
 int serverPort = 80;
 
 // Data Sending Time
-unsigned long CurrentMillis, PreviousMillis, DataSendingTime = (unsigned long) 2000 * 1;
+unsigned long CurrentMillis, PreviousMillis, DataSendingTime = (unsigned long) 1000 * 1;
 
 WebSocketsClient webSocket;
 
-int switch1 = 16;
+int switch1 = 16; // D0
 int switch2 = 5;
+
+#define SELECT_1 D5
+#define SELECT_2 D6
+#define SELECT_3 D7
+#define MUX_PIN A0
+
+float R1 = 100000;
+float R2 = 100000;
+
+float inv, ina, outv, outa;
 
 bool clientConnect = false;
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
@@ -106,13 +116,17 @@ void setup() {
   pinMode(switch1, OUTPUT);
   pinMode(switch2, OUTPUT);
 
+  pinMode(SELECT_1, OUTPUT);
+  pinMode(SELECT_2, OUTPUT);
+  pinMode(SELECT_3, OUTPUT);
+
   Serial.begin(115200);
   delay(1000);
   Serial.println("\n\n45h1m\n");
   setup_wifi();
 
   // server address, port, URL and protocol // URL and Protocol should not be change
-  webSocket.begin(serverHost, serverPort, "/");
+  webSocket.begin(serverHost, serverPort);
 
   // event handler
   webSocket.onEvent(webSocketEvent);
@@ -146,17 +160,90 @@ void loop() {
   }
 }
 
+float calculateCurrent(float calib = 0) {
+
+  int adc = analogRead(MUX_PIN);
+  Serial.println(adc);
+  float voltage = adc*5/1023.0;
+  Serial.println(voltage);
+  float current = (voltage-2.5)/0.185;
+  Serial.println(current);
+  Serial.println(calib);
+  
+  Serial.println(current + calib);
+
+  if((current + calib) < 0) return 0;
+
+  return (current + calib)*5000;
+}
+
+float calculateVoltage(float calib = 0) {
+
+  int adc_value = analogRead(MUX_PIN);
+   
+   // Determine voltage at ADC input
+   float adc_voltage  = (adc_value * 5.0) / 1024.0; 
+   
+   // Calculate voltage at divider input
+   float voltage = adc_voltage / (R2/(R1+R2)); 
+   
+   // Print results to Serial Monitor to 2 decimal places
+  //  if((voltage + calib) < 0) return 0;
+
+  return voltage + calib;
+}
+
+
 void sendEvent(const char* eventName, const char* eventData) {
+
+  // read the analog in value:
+  digitalWrite(SELECT_1, 0);
+  digitalWrite(SELECT_2, 0);
+  digitalWrite(SELECT_3, 0);
+
+  delay(5);
+  inv = calculateVoltage(4.7);
+  delay(5);
+
+
+  digitalWrite(SELECT_1, 1);
+  digitalWrite(SELECT_2, 0);
+  digitalWrite(SELECT_3, 0);
+
+  delay(5);
+  ina = calculateCurrent(-0.825);
+  delay(5);
+
+
+  digitalWrite(SELECT_1, 0);
+  digitalWrite(SELECT_2, 1);
+  digitalWrite(SELECT_3, 0);
+
+  delay(5);
+  // outv = calculateVoltage(4.7);
+  outv = 12.2;
+  delay(5);
+
+
+  digitalWrite(SELECT_1, 1);
+  digitalWrite(SELECT_2, 1);
+  digitalWrite(SELECT_3, 0);
+
+  delay(5);
+  outa = calculateCurrent(-0.829);
+  delay(5);
+
   // Construct the event message
   DynamicJsonDocument jsonBuffer(256);
   jsonBuffer["event"] = eventName;
-  jsonBuffer["inv"] = String(random(12, 16));
-  jsonBuffer["ina"] = String(random(5, 8));
-  jsonBuffer["outv"] = String(random(200, 240));
-  jsonBuffer["outa"] = String(random(1, 3));
+  jsonBuffer["inv"] = String(inv);
+  jsonBuffer["ina"] = String(ina);
+  jsonBuffer["outv"] = String(outv);
+  jsonBuffer["outa"] = String(outa);
 
   String output;
   serializeJson(jsonBuffer, output);
+  Serial.println(output);
 
   // Send the event message
   webSocket.sendTXT(output);

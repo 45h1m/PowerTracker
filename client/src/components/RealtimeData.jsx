@@ -59,7 +59,7 @@ const RealtimeData = () => {
                                     </div>
 
                                     <div className="flex items-end gap-2 pl-3">
-                                        <h4 className="text-lg font-bold">{currentData.ina} A</h4>
+                                        <h4 className="text-lg font-bold">{currentData.ina} mA</h4>
                                     </div>
                                 </div>
 
@@ -79,7 +79,7 @@ const RealtimeData = () => {
                                     </div>
 
                                     <div className="flex items-end gap-2 pl-3">
-                                        <h4 className="text-lg font-bold">{currentData.outa} A</h4>
+                                        <h4 className="text-lg font-bold">{currentData.outa} mA</h4>
                                     </div>
                                 </div>
 

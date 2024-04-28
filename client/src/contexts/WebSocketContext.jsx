@@ -2,8 +2,8 @@ import { createContext, useEffect, useState } from "react";
 
 export const WebSocketContext = createContext(null);
 
-const host = "powertracker-production.up.railway.app";
-// const host = '192.168.131.186';
+// const host = "powertracker-production.up.railway.app";
+const host = '192.168.69.186';
 
 let socket = null;
 
@@ -19,7 +19,7 @@ export const WebSocketProvider = (props) => {
     }, []);
 
     const connectSocket = () => {
-        const address = "wss:/" + "/" + host + ":443";
+        const address = "ws:/" + "/" + host + ":80";
         log(">>>>github/45h1m<<<<");
         log("Trying to connect socket");
         log(address);
@@ -82,6 +82,7 @@ export const WebSocketProvider = (props) => {
                 log,
                 currentData,
                 realtimeBuffer,
+                host
             }}
         >
             {props.children}

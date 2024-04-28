@@ -31,7 +31,7 @@ initCurrentData();
 function addData(jsonData) {
 
     
-    if(timer++ >= 100) {
+    if(timer++ >= 50) {
         timer = 0;
         
         currentData.push(jsonData);

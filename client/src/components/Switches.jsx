@@ -38,9 +38,9 @@ const Switches = () => {
     <div className='sticky bottom-0 left-0 w-full flex justify-center items-center bg-slate-800 p-4 gap-2 mt-5'>
         <p className='opacity-70'>Switch 1</p>
         <Switch onClick={()=> handleClick(1) } checked={btn1}/>
-        <div className='h-5 w-[0.1rem] bg-slate-700 mx-5'></div>
+        {/* <div className='h-5 w-[0.1rem] bg-slate-700 mx-5'></div>
         <p className='opacity-70' >Switch 2</p>
-        <Switch onClick={ ()=>handleClick(2) } checked={btn2}/>
+        <Switch onClick={ ()=>handleClick(2) } checked={btn2}/> */}
     </div>
   )
 }
